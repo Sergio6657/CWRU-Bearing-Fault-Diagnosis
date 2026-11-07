@@ -1,6 +1,13 @@
 <h1>🔧 [1D classification] Fault Diagnosis using CNN</h1>
 
 <p>This project implements a complete modular pipeline for classifying bearing faults using <strong>Convolutional Neural Networks</strong> on the <strong>CWRU</strong> (Case Western Reserve University) dataset.</p>
+# CWRU Bearing Fault Diagnosis using CNN
+My name is 贾承霖
+This project is a replication and extension of a baseline CNN model for CWRU bearing fault diagnosis.
+## My Results
+*   **Test Accuracy**: 100.00% (Note: This is due to random data splitting which causes data leakage. Next step: implement cross-condition validation.)
+*   **Environment**: Python 3.13, PyTorch
+
 
 <hr/>
 

@@ -2,11 +2,21 @@
 
 <p>This project implements a complete modular pipeline for classifying bearing faults using <strong>Convolutional Neural Networks</strong> on the <strong>CWRU</strong> (Case Western Reserve University) dataset.</p>
 # CWRU Bearing Fault Diagnosis using CNN
+
 My name is JIA CHENGLIN
 This project is a replication and extension of a baseline CNN model for CWRU bearing fault diagnosis.
-## My Results
-*   **Test Accuracy**: 100.00% (Note: This is due to random data splitting which causes data leakage. Next step: implement cross-condition validation.)
-*   **Environment**: Python 3.13, PyTorch
+
+
+Experiment 1: Random Split (Data Leakage)
+Method: Randomly split the dataset into train/val/test sets (Baseline provided by the original repo).
+Result: Test Accuracy 100.00%.
+Observation: This is an artificially inflated result due to data leakage. Slices from the same continuous signal ended up in both training and testing sets, causing the model to "memorize" instead of "generalize".
+
+
+Experiment 2: Time-Series Split (Cross-Condition Simulation)
+Method: To simulate real-world cross-condition scenarios, I split the data sequentially (first 70% for training, last 20% for testing) without shuffling. This means the model was trained on "Normal" and "Inner Race" faults, but tested on "Outer Race" faults.
+Result: Test Accuracy dropped to 0.00%.
+Insight: This catastrophic failure reveals a critical challenge in fault diagnosis: a model trained on limited conditions cannot generalize to unseen faults. This motivated me to implement a more scientific data splitting strategy (Stratified by class) to evaluate the model's true capability.
 
 
 <hr/>

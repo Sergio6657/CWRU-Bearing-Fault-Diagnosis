@@ -16,10 +16,21 @@ class MyDataset(Dataset):
         return self.x[idx].to(device), self.y[idx].to(device)
 
 def get_dataloaders(X, Y, opt):
-    x_train, x_valid, y_train, y_valid = train_test_split(
-        X, Y, train_size=opt.train_size, stratify=Y, random_state=42)
-    x_valid, x_test, y_valid, y_test = train_test_split(
-        x_valid, y_valid, train_size=0.5, stratify=y_valid, random_state=42)
+    n_samples = len(X)
+    train_end = int(0.7 * n_samples)  # 前70%作为训练+验证集
+    test_start = int(0.8 * n_samples)  # 后20%作为测试集（中间10%不用，防止相邻重叠）
+
+    x_train_val = X[:train_end]
+    y_train_val = Y[:train_end]
+
+    x_test = X[test_start:]
+    y_test = Y[test_start:]
+
+    train_size = int(0.8 * len(x_train_val))
+    x_train = x_train_val[:train_size]
+    y_train = y_train_val[:train_size]
+    x_valid = x_train_val[train_size:]
+    y_valid = y_train_val[train_size:]
 
     train_dl = DataLoader(MyDataset(x_train, y_train), batch_size=opt.batch_size, shuffle=True)
     valid_dl = DataLoader(MyDataset(x_valid, y_valid), batch_size=opt.batch_size, shuffle=False)
